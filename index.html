@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full-Stack App (Student Build)</title>
+
+  <!-- Bootstrap 5 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ===== Visibility Rules ===== */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    body.not-authenticated .role-logged-in { display: none; }
+    body.authenticated .role-logged-out { display: none; }
+
+    .role-admin { display: none; }
+    body.is-admin .role-admin { display: block; }
+  </style>
+</head>
+
+<body class="not-authenticated">
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-dark bg-dark px-4">
+    <a class="navbar-brand fw-semibold" href="#/">
+      Full-Stack App 
+    </a>
+
+    <ul class="navbar-nav ms-auto flex-row gap-3 align-items-center">
+
+      <!-- Logged OUT -->
+      <li class="nav-item role-logged-out">
+        <a class="nav-link" href="#/login">Login</a>
+      </li>
+      <li class="nav-item role-logged-out">
+        <a class="nav-link" href="#/register">Register</a>
+      </li>
+
+      <!-- Logged IN Dropdown -->
+      <li class="nav-item dropdown role-logged-in">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          data-bs-toggle="dropdown"
+        >
+          <span id="nav-username">Username</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="#/profile">Profile</a></li>
+          <li><a class="dropdown-item" href="#/requests">My Requests</a></li>
+
+          <li class="role-admin">
+            <a class="dropdown-item" href="#/employees">Employees</a>
+          </li>
+          <li class="role-admin">
+            <a class="dropdown-item" href="#/accounts">Accounts</a>
+          </li>
+          <li class="role-admin">
+            <a class="dropdown-item" href="#/departments">Departments</a>
+          </li>
+
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a class="dropdown-item text-danger" href="#" id="logoutBtn">
+              Logout
+            </a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+  </nav>
+
+  <!-- ===== MAIN ===== -->
+  <main class="container py-4">
+
+    <section id="home-page" class="page active">
+      <h2>Welcome to Full-Stack App</h2>
+      <p class="text-muted">
+        A static prototype before backend integration. Simulates:
+      </p>
+      <ul>
+        <li>Email registration + verification</li>
+        <li>JWT-style login simulation</li>
+        <li>Role-based UI (Admin / User)</li>
+        <li>CRUD for Employees, Departments, Requests</li>
+      </ul>
+      <a href="#/register" class="btn btn-primary">Get Started →</a>
+    </section>
+
+    <section id="register-page" class="page">
+      <h2>Register</h2>
+    </section>
+
+    <section id="verify-page" class="page">
+      <h2>Verify Email</h2>
+    </section>
+
+    <section id="login-page" class="page">
+      <h2>Login</h2>
+      <button class="btn btn-success me-2" onclick="loginUser()">
+        Login as User
+      </button>
+      <button class="btn btn-warning" onclick="loginAdmin()">
+        Login as Admin
+      </button>
+    </section>
+
+    <section id="profile-page" class="page">
+      <h2>My Profile</h2>
+      <p><strong>Username:</strong> <span id="profile-name"></span></p>
+      <p><strong>Role:</strong> <span id="profile-role"></span></p>
+    </section>
+
+    <section id="requests-page" class="page">
+      <h2>My Requests</h2>
+    </section>
+
+    <section id="employees-page" class="page">
+      <h2>Employees (Admin)</h2>
+    </section>
+
+    <section id="accounts-page" class="page">
+      <h2>Accounts (Admin)</h2>
+    </section>
+
+    <section id="departments-page" class="page">
+      <h2>Departments (Admin)</h2>
+    </section>
+
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /* ===== STATE ===== */
+    let currentUser = null;
+
+    /* ===== ROUTING ===== */
+    function navigateTo(hash) {
+      window.location.hash = hash;
+    }
+
+    function handleRouting() {
+      const hash = window.location.hash || "#/";
+      const route = hash.replace("#/", "");
+
+      document.querySelectorAll(".page").forEach(p =>
+        p.classList.remove("active")
+      );
+
+      const routes = {
+        "": "home-page",
+        "register": "register-page",
+        "verify": "verify-page",
+        "login": "login-page",
+        "profile": "profile-page",
+        "requests": "requests-page",
+        "employees": "employees-page",
+        "accounts": "accounts-page",
+        "departments": "departments-page"
+      };
+
+      const protectedRoutes = ["profile", "requests"];
+      const adminRoutes = ["employees", "accounts", "departments"];
+
+      if (protectedRoutes.includes(route) && !currentUser) {
+        navigateTo("#/login");
+        return;
+      }
+
+      if (adminRoutes.includes(route) && currentUser?.role !== "admin") {
+        navigateTo("#/");
+        return;
+      }
+
+      const pageId = routes[route] || "home-page";
+      document.getElementById(pageId).classList.add("active");
+    }
+
+    window.addEventListener("hashchange", handleRouting);
+
+    window.addEventListener("load", () => {
+      if (!location.hash) navigateTo("#/");
+      handleRouting();
+    });
+
+    /* ===== AUTH SIMULATION ===== */
+    function loginUser() {
+      currentUser = { username: "student", role: "user" };
+      applyAuth();
+    }
+
+    function loginAdmin() {
+      currentUser = { username: "admin", role: "admin" };
+      applyAuth();
+    }
+
+    function applyAuth() {
+      document.body.className = "authenticated";
+      if (currentUser.role === "admin") {
+        document.body.classList.add("is-admin");
+      }
+
+      document.getElementById("nav-username").textContent = currentUser.username;
+      document.getElementById("profile-name").textContent = currentUser.username;
+      document.getElementById("profile-role").textContent = currentUser.role;
+
+      navigateTo("#/profile");
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      currentUser = null;
+      document.body.className = "not-authenticated";
+      navigateTo("#/");
+    });
+  </script>
+
+</body>
+</html>
