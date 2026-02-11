@@ -1,227 +1,376 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Full-Stack App (Student Build)</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full-Stack App (Student Build)</title>
 
-  <!-- Bootstrap 5 -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <style>
-    /* ===== Visibility Rules ===== */
-    .page { display: none; }
-    .page.active { display: block; }
+<style>
+.page { display: none; }
+.page.active { display: block; }
 
-    body.not-authenticated .role-logged-in { display: none; }
-    body.authenticated .role-logged-out { display: none; }
+body.not-authenticated .role-logged-in { display: none; }
+body.authenticated .role-logged-out { display: none; }
 
-    .role-admin { display: none; }
-    body.is-admin .role-admin { display: block; }
-  </style>
+.role-admin { display: none; }
+body.is-admin .role-admin { display: block; }
+</style>
 </head>
 
 <body class="not-authenticated">
 
-  <!-- ===== NAVBAR ===== -->
-  <nav class="navbar navbar-dark bg-dark px-4">
-    <a class="navbar-brand fw-semibold" href="#/">
-      Full-Stack App 
-    </a>
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-dark px-4">
+  <a class="navbar-brand" href="#/">FULL STACK APP</a>
 
-    <ul class="navbar-nav ms-auto flex-row gap-3 align-items-center">
+  <ul class="navbar-nav ms-auto flex-row gap-3 align-items-center">
 
-      <!-- Logged OUT -->
-      <li class="nav-item role-logged-out">
-        <a class="nav-link" href="#/login">Login</a>
-      </li>
-      <li class="nav-item role-logged-out">
-        <a class="nav-link" href="#/register">Register</a>
-      </li>
+    <li class="nav-item role-logged-out">
+      <a class="nav-link" href="#/login">Login</a>
+    </li>
 
-      <!-- Logged IN Dropdown -->
-      <li class="nav-item dropdown role-logged-in">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          data-bs-toggle="dropdown"
-        >
-          <span id="nav-username">Username</span>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="#/profile">Profile</a></li>
-          <li><a class="dropdown-item" href="#/requests">My Requests</a></li>
+    <li class="nav-item role-logged-out">
+      <a class="nav-link" href="#/register">Register</a>
+    </li>
 
-          <li class="role-admin">
-            <a class="dropdown-item" href="#/employees">Employees</a>
-          </li>
-          <li class="role-admin">
-            <a class="dropdown-item" href="#/accounts">Accounts</a>
-          </li>
-          <li class="role-admin">
-            <a class="dropdown-item" href="#/departments">Departments</a>
-          </li>
+    <li class="nav-item dropdown role-logged-in">
+      <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+        <span id="nav-username"></span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="#/profile">Profile</a></li>
+        <li><a class="dropdown-item" href="#/requests">My Requests</a></li>
 
-          <li><hr class="dropdown-divider" /></li>
-          <li>
-            <a class="dropdown-item text-danger" href="#" id="logoutBtn">
-              Logout
-            </a>
-          </li>
-        </ul>
-      </li>
+        <li class="role-admin"><a class="dropdown-item" href="#/employees">Employees</a></li>
+        <li class="role-admin"><a class="dropdown-item" href="#/departments">Departments</a></li>
+        <li class="role-admin"><a class="dropdown-item" href="#/accounts">Accounts</a></li>
 
-    </ul>
-  </nav>
-
-  <!-- ===== MAIN ===== -->
-  <main class="container py-4">
-
-    <section id="home-page" class="page active">
-      <h2>Welcome to Full-Stack App</h2>
-      <p class="text-muted">
-        A static prototype before backend integration. Simulates:
-      </p>
-      <ul>
-        <li>Email registration + verification</li>
-        <li>JWT-style login simulation</li>
-        <li>Role-based UI (Admin / User)</li>
-        <li>CRUD for Employees, Departments, Requests</li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
       </ul>
-      <a href="#/register" class="btn btn-primary">Get Started →</a>
-    </section>
+    </li>
 
-    <section id="register-page" class="page">
-      <h2>Register</h2>
-    </section>
+  </ul>
+</nav>
 
-    <section id="verify-page" class="page">
-      <h2>Verify Email</h2>
-    </section>
+<main class="container py-5">
 
-    <section id="login-page" class="page">
-      <h2>Login</h2>
-      <button class="btn btn-success me-2" onclick="loginUser()">
-        Login as User
-      </button>
-      <button class="btn btn-warning" onclick="loginAdmin()">
-        Login as Admin
-      </button>
-    </section>
+<!-- HOME -->
+<section id="home-page" class="page active">
+  <h2>Welcome to Full-Stack App</h2>
+  <p class="text-muted">Full Client-Side Full-Stack Simulation</p>
+  <a href="#/register" class="btn btn-primary">Get Started →</a>
+</section>
 
-    <section id="profile-page" class="page">
-      <h2>My Profile</h2>
-      <p><strong>Username:</strong> <span id="profile-name"></span></p>
-      <p><strong>Role:</strong> <span id="profile-role"></span></p>
-    </section>
+<!-- REGISTER -->
+<section id="register-page" class="page">
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card shadow-sm">
+<div class="card-body">
+<h3 class="mb-4 text-center">Register</h3>
 
-    <section id="requests-page" class="page">
-      <h2>My Requests</h2>
-    </section>
+<form id="registerForm">
+<div class="mb-3">
+<label class="form-label">Username</label>
+<input type="text" class="form-control" required>
+</div>
 
-    <section id="employees-page" class="page">
-      <h2>Employees (Admin)</h2>
-    </section>
+<div class="mb-3">
+<label class="form-label">Email</label>
+<input type="email" class="form-control" required>
+</div>
 
-    <section id="accounts-page" class="page">
-      <h2>Accounts (Admin)</h2>
-    </section>
+<div class="mb-3">
+<label class="form-label">Password</label>
+<input type="password" class="form-control" required>
+</div>
 
-    <section id="departments-page" class="page">
-      <h2>Departments (Admin)</h2>
-    </section>
+<div class="mb-3">
+<label class="form-label">Role</label>
+<select class="form-select">
+<option value="user">User</option>
+<option value="admin">Admin</option>
+</select>
+</div>
 
-  </main>
+<button class="btn btn-success w-100">Register</button>
+</form>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-  <script>
-    /* ===== STATE ===== */
-    let currentUser = null;
+<!-- VERIFY -->
+<section id="verify-page" class="page">
+<h3>Verify Your Email</h3>
 
-    /* ===== ROUTING ===== */
-    function navigateTo(hash) {
-      window.location.hash = hash;
-    }
+<div class="alert alert-success">
+A verification link has been sent.
+</div>
 
-    function handleRouting() {
-      const hash = window.location.hash || "#/";
-      const route = hash.replace("#/", "");
+<button id="verifyBtn" class="btn btn-success">Simulate Email Verification</button>
+<a href="#/login" class="btn btn-secondary">Go to Login</a>
 
-      document.querySelectorAll(".page").forEach(p =>
-        p.classList.remove("active")
-      );
+<div id="verifiedMsg" class="alert alert-success mt-3 d-none">
+Email verified! You may now log in.
+</div>
+</section>
 
-      const routes = {
-        "": "home-page",
-        "register": "register-page",
-        "verify": "verify-page",
-        "login": "login-page",
-        "profile": "profile-page",
-        "requests": "requests-page",
-        "employees": "employees-page",
-        "accounts": "accounts-page",
-        "departments": "departments-page"
-      };
+<!-- LOGIN -->
+<section id="login-page" class="page">
+<div class="row justify-content-center">
+<div class="col-md-5">
+<div class="card shadow-sm">
+<div class="card-body">
+<h3 class="mb-4 text-center">Login</h3>
 
-      const protectedRoutes = ["profile", "requests"];
-      const adminRoutes = ["employees", "accounts", "departments"];
+<div id="loginError" class="alert alert-danger d-none"></div>
 
-      if (protectedRoutes.includes(route) && !currentUser) {
-        navigateTo("#/login");
-        return;
-      }
+<form id="loginForm">
+<div class="mb-3">
+<label>Username</label>
+<input type="text" class="form-control" required>
+</div>
 
-      if (adminRoutes.includes(route) && currentUser?.role !== "admin") {
-        navigateTo("#/");
-        return;
-      }
+<div class="mb-3">
+<label>Password</label>
+<input type="password" class="form-control" required>
+</div>
 
-      const pageId = routes[route] || "home-page";
-      document.getElementById(pageId).classList.add("active");
-    }
+<button class="btn btn-primary w-100">Login</button>
+</form>
 
-    window.addEventListener("hashchange", handleRouting);
+</div>
+</div>
+</div>
+</div>
+</section>
 
-    window.addEventListener("load", () => {
-      if (!location.hash) navigateTo("#/");
-      handleRouting();
-    });
+<!-- PROFILE -->
+<section id="profile-page" class="page">
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card shadow-sm">
+<div class="card-body">
+<h3>My Profile</h3>
+<p><strong>Username:</strong> <span id="profile-name"></span></p>
+<p><strong>Role:</strong> <span id="profile-role"></span></p>
+</div>
+</div>
+</div>
+</div>
+</section>
 
-    /* ===== AUTH SIMULATION ===== */
-    function loginUser() {
-      currentUser = { username: "student", role: "user" };
-      applyAuth();
-    }
+<!-- EMPLOYEES -->
+<section id="employees-page" class="page role-admin">
+<div class="d-flex justify-content-between mb-3">
+<h3>Employees</h3>
+<button class="btn btn-success btn-sm">+ Add Employee</button>
+</div>
 
-    function loginAdmin() {
-      currentUser = { username: "admin", role: "admin" };
-      applyAuth();
-    }
+<table class="table table-bordered">
+<thead class="table-dark">
+<tr>
+<th>ID</th><th>Name</th><th>Position</th><th>Dept</th><th>Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td><td>John Doe</td><td>Developer</td><td>Engineering</td>
+<td>
+<button class="btn btn-sm btn-primary">Edit</button>
+<button class="btn btn-sm btn-danger">Delete</button>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
 
-    function applyAuth() {
-      document.body.className = "authenticated";
-      if (currentUser.role === "admin") {
-        document.body.classList.add("is-admin");
-      }
+<!-- DEPARTMENTS -->
+<section id="departments-page" class="page role-admin">
+<div class="d-flex justify-content-between mb-3">
+<h3>Departments</h3>
+<button class="btn btn-success btn-sm">+ Add Department</button>
+</div>
 
-      document.getElementById("nav-username").textContent = currentUser.username;
-      document.getElementById("profile-name").textContent = currentUser.username;
-      document.getElementById("profile-role").textContent = currentUser.role;
+<table class="table table-bordered">
+<thead class="table-dark">
+<tr>
+<th>Name</th><th>Description</th><th>Actions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Engineering</td><td>Software team</td>
+<td>
+<button class="btn btn-sm btn-primary">Edit</button>
+<button class="btn btn-sm btn-danger">Delete</button>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
 
-      navigateTo("#/profile");
-    }
+<!-- ACCOUNTS -->
+<section id="accounts-page" class="page role-admin">
+<div class="d-flex justify-content-between mb-3">
+<h3>Accounts</h3>
+<button class="btn btn-success btn-sm">+ Add Account</button>
+</div>
 
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      currentUser = null;
-      document.body.className = "not-authenticated";
-      navigateTo("#/");
-    });
-  </script>
+<table class="table table-bordered">
+<thead class="table-dark">
+<tr>
+<th>Username</th><th>Email</th><th>Role</th><th>Verified</th>
+</tr>
+</thead>
+<tbody id="accountsTable"></tbody>
+</table>
+</section>
+
+<!-- REQUESTS -->
+<section id="requests-page" class="page">
+<div class="d-flex justify-content-between mb-3">
+<h3>My Requests</h3>
+<button class="btn btn-success btn-sm">+ New Request</button>
+</div>
+<p>You have no requests yet.</p>
+</section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+let currentUser = null;
+let pendingVerificationUser = null;
+
+/* ROUTING */
+function navigateTo(hash){ location.hash = hash; }
+
+function handleRouting(){
+const route = (location.hash || "#/").replace("#/","");
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+
+const routes = {
+"": "home-page",
+"register":"register-page",
+"verify":"verify-page",
+"login":"login-page",
+"profile":"profile-page",
+"requests":"requests-page",
+"employees":"employees-page",
+"departments":"departments-page",
+"accounts":"accounts-page"
+};
+
+if(["profile","requests"].includes(route) && !currentUser){ navigateTo("#/login"); return;}
+if(["employees","departments","accounts"].includes(route) && currentUser?.role!=="admin"){ navigateTo("#/"); return;}
+
+document.getElementById(routes[route]||"home-page").classList.add("active");
+}
+
+window.addEventListener("hashchange",handleRouting);
+window.addEventListener("load",handleRouting);
+
+/* REGISTER */
+document.getElementById("registerForm").addEventListener("submit",e=>{
+e.preventDefault();
+const i=e.target.querySelectorAll("input,select");
+
+const user={
+username:i[0].value.trim(),
+email:i[1].value.trim(),
+password:i[2].value.trim(),
+role:i[3].value,
+verified:false
+};
+
+const users=JSON.parse(localStorage.getItem("users")||"[]");
+if(users.some(u=>u.username===user.username)){ alert("Username exists"); return;}
+
+users.push(user);
+localStorage.setItem("users",JSON.stringify(users));
+
+pendingVerificationUser=user.username;
+navigateTo("#/verify");
+});
+
+/* VERIFY */
+document.getElementById("verifyBtn").addEventListener("click",()=>{
+const users=JSON.parse(localStorage.getItem("users")||"[]");
+const user=users.find(u=>u.username===pendingVerificationUser);
+if(!user) return;
+user.verified=true;
+localStorage.setItem("users",JSON.stringify(users));
+document.getElementById("verifiedMsg").classList.remove("d-none");
+});
+
+/* LOGIN */
+document.getElementById("loginForm").addEventListener("submit",e=>{
+e.preventDefault();
+const i=e.target.querySelectorAll("input");
+const username=i[0].value.trim();
+const password=i[1].value.trim();
+
+const users=JSON.parse(localStorage.getItem("users")||"[]");
+const user=users.find(u=>u.username===username && u.password===password);
+
+if(!user){ showError("Invalid credentials"); return;}
+if(!user.verified){ showError("Please verify email first"); return;}
+
+currentUser=user;
+applyAuth();
+});
+
+function showError(msg){
+const el=document.getElementById("loginError");
+el.textContent=msg;
+el.classList.remove("d-none");
+}
+
+function applyAuth(){
+document.body.className="authenticated";
+if(currentUser.role==="admin"){ document.body.classList.add("is-admin"); }
+
+document.getElementById("nav-username").textContent=currentUser.username;
+document.getElementById("profile-name").textContent=currentUser.username;
+document.getElementById("profile-role").textContent=currentUser.role;
+
+loadAccounts();
+navigateTo("#/profile");
+}
+
+/* LOAD ACCOUNTS TABLE */
+function loadAccounts(){
+const users=JSON.parse(localStorage.getItem("users")||"[]");
+const table=document.getElementById("accountsTable");
+if(!table) return;
+
+table.innerHTML="";
+users.forEach(u=>{
+table.innerHTML+=`
+<tr>
+<td>${u.username}</td>
+<td>${u.email}</td>
+<td>${u.role}</td>
+<td>${u.verified ? "✅" : "❌"}</td>
+</tr>
+`;
+});
+}
+
+document.getElementById("logoutBtn").addEventListener("click",()=>{
+currentUser=null;
+document.body.className="not-authenticated";
+navigateTo("#/");
+});
+</script>
 
 </body>
 </html>
